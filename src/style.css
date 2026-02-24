@@ -1,0 +1,33 @@
+* {
+    background-color: aliceblue;
+}
+
+h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 75px;
+    text-align: center;
+    color: rgb(163, 212, 228);
+    padding: 25px;
+}
+
+p {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 25px;
+    text-align: center;
+}
+
+.container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
