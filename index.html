@@ -11,36 +11,30 @@
 <body>
   <h1> Cubic Equation Solver </h1>
 
-  <p> Please input 4 real numbers that represent the coefficients of a cubic function 
-    <br> 
-    <br> 
-    ax³ + bx² + cx + d </p>
+  <p> Please input 4 real numbers that represent the coefficients of a cubic function
+    <br>
+    <br>
+    ax³ + bx² + cx + d
+  </p>
 
   <div class="container">
     <form id="cubic-form">
-      <div class="input a">
-        <label for="a">a value:</label>
-        <input type="number" id="a" name="a" required />
-      </div>
-      <div class="input b">
-        <label for="b">b value:</label>
-        <input type="number" id="b" name="b" required />
-      </div>
-      <div class="input c">
-        <label for="c">c value:</label>
-        <input type="number" id="c" name="c" required />
-      </div>
-      <div class="input d">
-        <label for="d">d value:</label>
-        <input type="number" id="d" name="d" required />
-      </div>
+      <label for="a"> Enter A value: </label>
+      <input type="text" id="a" name="a"> <br>
+      <label for="b"> Enter B value: </label>
+      <input type="text" id="b" name="b"> <br>
+      <label for="c"> Enter C value: </label>
+      <input type="text" id="c" name="c"> <br>
+      <label for="d"> Enter D value: </label>
+      <input type="text" id="d" name="d"> <br>
       <label for="result">Result:</label>
       <input type="text" id="result" name="result" />
       <input type="submit" value="Calculate" />
+
     </form>
   </div>
 
-  <script src="script.ts"></script>
+  <script src="src/main.ts"></script>
 </body>
 
 </html>
