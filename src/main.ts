@@ -60,5 +60,47 @@ form?.addEventListener("submit", (event) => {
 
     const canvas = document.getElementById("graph") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
+
+    const width = canvas.width;
+    const height = canvas.height;
+    const scale = 25;
+
+    function drawGraph() {
+        if (!ctx) return;
+
+        ctx.clearRect(0, 0, width, height)
+        
+        ctx.strokeStyle = "#e0e0e0";
+        ctx.lineWidth = 1;
+
+        for (let x = 0; x <= width; x += scale) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, height);
+            ctx.stroke();
+        }
+
+        for (let y = 0; y <= height; y += scale) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(width, y);
+            ctx.stroke();
+        }
+
+        ctx.strokeStyle = "#000000";
+
+        ctx.beginPath();
+        ctx.moveTo(0, height/2)
+        ctx.lineTo(width, height/2)
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(width/2, 0)
+        ctx.lineTo(width/2, height)
+        ctx.stroke();
+    }
+
+    drawGraph();
+
 }
 )
