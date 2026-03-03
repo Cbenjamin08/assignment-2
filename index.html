@@ -9,31 +9,45 @@
 </head>
 
 <body>
+
   <h1> Cubic Equation Solver </h1>
 
-  <p> Please input 4 real numbers that represent the coefficients of a cubic function
-    <br>
-    <br>
-    ax³ + bx² + cx + d
-  </p>
+  <p> Please input 4 real numbers that represent the coefficients of a cubic function </p>
 
-  <div class="container">
-    <form id="cubic-form">
-      <label for="a"> Enter A value: </label>
-      <input type="text" id="a" name="a"> <br>
-      <label for="b"> Enter B value: </label>
-      <input type="text" id="b" name="b"> <br>
-      <label for="c"> Enter C value: </label>
-      <input type="text" id="c" name="c"> <br>
-      <label for="d"> Enter D value: </label>
-      <input type="text" id="d" name="d"> <br>
-      <label for="result">Result:</label>
-      <input type="text" id="result" name="result" />
-      <input type="submit" value="Calculate" />
+  <div class="main-layout">
+    <div class="left-side">
+      <div class="container">
+        <form id="cubic-form">
+          <label for="a"> Enter A value: </label>
+          <input type="text" id="a" name="a">
+          <label for="b"> Enter B value: </label>
+          <input type="text" id="b" name="b">
+          <label for="c"> Enter C value: </label>
+          <input type="text" id="c" name="c">
+          <label for="d"> Enter D value: </label>
+          <input type="text" id="d" name="d">
+          <input type="submit" value="Solve" />
+        </form>
+      </div>
 
-    </form>
+      <div class="calculations">
+        <label for="p-value"> p </label>
+        <input type="text" id="p-value" readonly />
+        <label for="q-value"> q </label>
+        <input type="text" id="q-value" readonly />
+        <label for="discriminant"> Discriminant </label>
+        <input type="text" id="discriminant" readonly />
+        <label for="root-one"> Root 1 </label>
+        <input type="text" id="root-one" readonly />
+        <label for="root-two"> Root 2 </label>
+        <input type="text" id="root-two" readonly />
+        <label for="root-three"> Root 3 </label>
+        <input type="text" id="root-three" readonly />
+      </div>
+    </div>
+
+    <canvas id="graph" width="700" height="700"></canvas>
   </div>
-
   <script src="src/main.ts"></script>
 </body>
 
