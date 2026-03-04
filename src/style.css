@@ -102,7 +102,7 @@ input[type="submit"]:hover {
 
 .main-layout {
   display: flex;
-  gap: 200px;
+  gap: 50px;
   align-items: flex-start;
   justify-content: space-between;
   width: 100%;
