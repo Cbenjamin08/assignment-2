@@ -11,8 +11,8 @@ form?.addEventListener("submit", (event) => {
     const d: number = Number(formData.get("d"));
 
     const root1 = document.getElementById("root-one") as HTMLInputElement;
-    const root2 = document.getElementById("root-two") as HTMLInputElement
-    const root3 = document.getElementById("root-three") as HTMLInputElement
+    const root2 = document.getElementById("root-two") as HTMLInputElement;
+    const root3 = document.getElementById("root-three") as HTMLInputElement;
 
     let rootOne: number;
     let rootTwo: number;
@@ -30,12 +30,16 @@ form?.addEventListener("submit", (event) => {
         return u + v - adjustment;
     }
 
-    if (discriminant < 0) { // Trignometric Case for three distinc real roots
+    if (discriminant < 0) { // Trignometric Case for three distinct real roots
         const theta = (1 / 3) * Math.acos(-q / (2 * Math.sqrt(-Math.pow(p / 3, 3))));
 
-        rootOne = 2 * Math.sqrt(-p / 3) * Math.cos(theta) - adjustment;
-        rootTwo = 2 * Math.sqrt(-p / 3) * Math.cos(theta + 2 * Math.PI / 3) - adjustment;
-        rootThree = 2 * Math.sqrt(-p / 3) * Math.cos(theta + 4 * Math.PI / 3) - adjustment;
+        function trignometric(k: number): number {
+            return 2 * Math.sqrt(-p / 3) * Math.cos(theta + 2 * k * Math.PI / 3) - adjustment
+        }
+
+        rootOne = trignometric(0);
+        rootTwo = trignometric(1);
+        rootThree = trignometric(2);
         root1.value = rootOne.toFixed(3);
         root2.value = rootTwo.toFixed(3);
         root3.value = rootThree.toFixed(3);
@@ -58,9 +62,22 @@ form?.addEventListener("submit", (event) => {
         }
     }
 
+    function equation(): string {
+        let equation: string = '';
+        
+        equation += a + 'x³';
+        equation += (b === 0 ? '' : (b > 0 ? ' + ' + b : ' - ' + Math.abs(b)) + 'x²');
+        equation += (c === 0 ? '' : (c > 0 ? ' + ' + c : ' - ' + Math.abs(c)) + 'x');
+        equation += (d === 0 ? '' : (d > 0 ? ' + ' + d : ' - ' + Math.abs(d))) + ' = 0';
+
+        return equation;
+        
+    }
+
     (document.getElementById("p-value") as HTMLInputElement).value = p.toFixed(3);
     (document.getElementById("q-value") as HTMLInputElement).value = q.toFixed(3);
     (document.getElementById("discriminant") as HTMLInputElement).value = discriminant.toFixed(3);
+    (document.getElementById("equation") as HTMLParagraphElement).textContent = equation();
 
     const canvas = document.getElementById("graph") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
@@ -109,8 +126,8 @@ form?.addEventListener("submit", (event) => {
         for (let x = -width / (2 * scale); x <= width / (2 * scale); x += 0.05) {
             const y = a * x * x * x + b * x * x + c * x + d;
 
-            const canvasX = width / 2 + x * scale;
-            const canvasY = height / 2 - y * scale;
+            const canvasX = width / 2 + x * scale; // Translates graph coordinates into pixel
+            const canvasY = height / 2 - y * scale; // coordinates
 
             if (x === -width / (2 * scale)) {
                 ctx.moveTo(canvasX, canvasY)
