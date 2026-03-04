@@ -14,6 +14,10 @@ form?.addEventListener("submit", (event) => {
     const root2 = document.getElementById("root-two") as HTMLInputElement
     const root3 = document.getElementById("root-three") as HTMLInputElement
 
+    let rootOne: number;
+    let rootTwo: number;
+    let rootThree: number;
+
     /* Different variables used for each calculation */
     const p = (3 * a * c - b * b) / (3 * a * a);
     const q = (27 * a * a * d - 9 * a * b * c + 2 * b * b * b) / (27 * a * a * a);
@@ -29,28 +33,28 @@ form?.addEventListener("submit", (event) => {
     if (discriminant < 0) { // Trignometric Case for three distinc real roots
         const theta = (1 / 3) * Math.acos(-q / (2 * Math.sqrt(-Math.pow(p / 3, 3))));
 
-        const rootOne = 2 * Math.sqrt(-p / 3) * Math.cos(theta) - adjustment;
-        const rootTwo = 2 * Math.sqrt(-p / 3) * Math.cos(theta + 2 * Math.PI / 3) - adjustment;
-        const rootThree = 2 * Math.sqrt(-p / 3) * Math.cos(theta + 4 * Math.PI / 3) - adjustment;
+        rootOne = 2 * Math.sqrt(-p / 3) * Math.cos(theta) - adjustment;
+        rootTwo = 2 * Math.sqrt(-p / 3) * Math.cos(theta + 2 * Math.PI / 3) - adjustment;
+        rootThree = 2 * Math.sqrt(-p / 3) * Math.cos(theta + 4 * Math.PI / 3) - adjustment;
         root1.value = rootOne.toFixed(3);
         root2.value = rootTwo.toFixed(3);
         root3.value = rootThree.toFixed(3);
     } else if (discriminant > 0) { // One real root, one pair of complex roots
-        const realRoot = cardano(u, v);
-        root1.value = realRoot.toFixed(3);
+        rootOne = cardano(u, v);
+        root1.value = rootOne.toFixed(3);
         root2.value = "Complex Root";
         root3.value = "Complex Root";
     } else {
-        const rootRepeated = cardano(u, v);
+        rootOne = cardano(u, v);
         if (p && q === 0) { // One repeated root
-            root1.value = rootRepeated.toFixed(3);
-            root2.value = rootRepeated.toFixed(3);
-            root3.value = rootRepeated.toFixed(3);
+            root1.value = rootOne.toFixed(3);
+            root2.value = rootOne.toFixed(3);
+            root3.value = rootOne.toFixed(3);
         } else { // One distinct root, one repeated root
-            const rootSingle = Math.cbrt(q / 2) - adjustment;
-            root1.value = rootRepeated.toFixed(3);
-            root2.value = rootRepeated.toFixed(3);
-            root3.value = rootSingle.toFixed(3);
+            rootTwo = Math.cbrt(q / 2) - adjustment;
+            root1.value = rootOne.toFixed(3);
+            root2.value = rootOne.toFixed(3);
+            root3.value = rootTwo.toFixed(3);
         }
     }
 
@@ -69,7 +73,7 @@ form?.addEventListener("submit", (event) => {
         if (!ctx) return;
 
         ctx.clearRect(0, 0, width, height)
-        
+
         ctx.strokeStyle = "#e0e0e0";
         ctx.lineWidth = 1;
 
@@ -90,17 +94,52 @@ form?.addEventListener("submit", (event) => {
         ctx.strokeStyle = "#000000";
 
         ctx.beginPath();
-        ctx.moveTo(0, height/2)
-        ctx.lineTo(width, height/2)
+        ctx.moveTo(0, height / 2)
+        ctx.lineTo(width, height / 2)
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.moveTo(width/2, 0)
-        ctx.lineTo(width/2, height)
+        ctx.moveTo(width / 2, 0)
+        ctx.lineTo(width / 2, height)
+        ctx.stroke();
+
+        ctx.strokeStyle = "#ff0000"
+
+        ctx.beginPath();
+        for (let x = -width / (2 * scale); x <= width / (2 * scale); x += 0.05) {
+            const y = a * x * x * x + b * x * x + c * x + d;
+
+            const canvasX = width / 2 + x * scale;
+            const canvasY = height / 2 - y * scale;
+
+            if (x === -width / (2 * scale)) {
+                ctx.moveTo(canvasX, canvasY)
+            } else {
+                ctx.lineTo(canvasX, canvasY);
+            }
+
+            ctx.stroke();
+
+        }
+
+        ctx.strokeStyle = "#002aff";
+        ctx.fillStyle = "#002aff";
+        ctx.beginPath();
+        ctx.arc(width / 2 + rootOne * scale, height / 2, 2.5, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(width / 2 + rootTwo * scale, height / 2, 2.5, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(width / 2 + rootThree * scale, height / 2, 2.5, 0, 2 * Math.PI);
+        ctx.fill();
         ctx.stroke();
     }
 
     drawGraph();
 
-}
-)
+})
