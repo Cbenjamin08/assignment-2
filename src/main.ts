@@ -34,7 +34,7 @@ form?.addEventListener("submit", (event) => {
         const theta = (1 / 3) * Math.acos(-q / (2 * Math.sqrt(-Math.pow(p / 3, 3))));
         return 2 * Math.sqrt(-p / 3) * Math.cos(theta + 2 * k * Math.PI / 3) - adjustment
     }
-    
+
     if (discriminant < 0) { // Trignometric Case for three distinct real roots
         rootOne = trignometric(0);
         rootTwo = trignometric(1);
@@ -70,15 +70,12 @@ form?.addEventListener("submit", (event) => {
         equation += (d === 0 ? '' : (d > 0 ? ' + ' + d : ' - ' + Math.abs(d))) + ' = 0';
 
         return equation; 
-        
     }
 
     (document.getElementById("p-value") as HTMLInputElement).value = p.toFixed(3);
     (document.getElementById("q-value") as HTMLInputElement).value = q.toFixed(3);
     (document.getElementById("discriminant") as HTMLInputElement).value = discriminant.toFixed(3);
     (document.getElementById("equation") as HTMLParagraphElement).textContent = equation();
-
-    
 
     const canvas = document.getElementById("graph") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
