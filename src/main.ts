@@ -30,13 +30,12 @@ form?.addEventListener("submit", (event) => {
         return u + v - adjustment;
     }
 
-    if (discriminant < 0) { // Trignometric Case for three distinct real roots
+    function trignometric(k: number): number {
         const theta = (1 / 3) * Math.acos(-q / (2 * Math.sqrt(-Math.pow(p / 3, 3))));
-
-        function trignometric(k: number): number {
-            return 2 * Math.sqrt(-p / 3) * Math.cos(theta + 2 * k * Math.PI / 3) - adjustment
-        }
-
+        return 2 * Math.sqrt(-p / 3) * Math.cos(theta + 2 * k * Math.PI / 3) - adjustment
+    }
+    
+    if (discriminant < 0) { // Trignometric Case for three distinct real roots
         rootOne = trignometric(0);
         rootTwo = trignometric(1);
         rootThree = trignometric(2);
@@ -70,7 +69,7 @@ form?.addEventListener("submit", (event) => {
         equation += (c === 0 ? '' : (c > 0 ? ' + ' + c : ' - ' + Math.abs(c)) + 'x');
         equation += (d === 0 ? '' : (d > 0 ? ' + ' + d : ' - ' + Math.abs(d))) + ' = 0';
 
-        return equation;
+        return equation; 
         
     }
 
@@ -79,11 +78,15 @@ form?.addEventListener("submit", (event) => {
     (document.getElementById("discriminant") as HTMLInputElement).value = discriminant.toFixed(3);
     (document.getElementById("equation") as HTMLParagraphElement).textContent = equation();
 
+    
+
     const canvas = document.getElementById("graph") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
 
     const width = canvas.width;
     const height = canvas.height;
+    const centerX = width / 2;
+    const centerY = height / 2
     const scale = 25;
 
     function drawGraph() {
@@ -92,7 +95,6 @@ form?.addEventListener("submit", (event) => {
         ctx.clearRect(0, 0, width, height)
 
         ctx.strokeStyle = "#e0e0e0";
-        ctx.lineWidth = 1;
 
         for (let x = 0; x <= width; x += scale) {
             ctx.beginPath();
@@ -111,30 +113,26 @@ form?.addEventListener("submit", (event) => {
         ctx.strokeStyle = "#000000";
 
         ctx.beginPath();
-        ctx.moveTo(0, height / 2)
-        ctx.lineTo(width, height / 2)
+        ctx.moveTo(0, centerY)
+        ctx.lineTo(width, centerY)
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.moveTo(width / 2, 0)
-        ctx.lineTo(width / 2, height)
+        ctx.moveTo(centerX, 0)
+        ctx.lineTo(centerX, height)
         ctx.stroke();
 
         ctx.strokeStyle = "#ff0000"
 
         ctx.beginPath();
-        for (let x = -width / (2 * scale); x <= width / (2 * scale); x += 0.05) {
+        for (let x = -centerX / scale; x <= centerX / scale; x += 0.05) {
             const y = a * x * x * x + b * x * x + c * x + d;
+            const canvasX = centerX + x * scale; // Translates graph coordinates into pixel
+            const canvasY = centerY - y * scale; // coordinates
 
-            const canvasX = width / 2 + x * scale; // Translates graph coordinates into pixel
-            const canvasY = height / 2 - y * scale; // coordinates
-
-            if (x === -width / (2 * scale)) {
-                ctx.moveTo(canvasX, canvasY)
-            } else {
-                ctx.lineTo(canvasX, canvasY);
-            }
-
+            if (x === -width / (2 * scale)) ctx.moveTo(canvasX, canvasY) 
+                else ctx.lineTo(canvasX, canvasY);
+            
             ctx.stroke();
 
         }
@@ -142,21 +140,17 @@ form?.addEventListener("submit", (event) => {
         ctx.strokeStyle = "#002aff";
         ctx.fillStyle = "#002aff";
         ctx.beginPath();
-        ctx.arc(width / 2 + rootOne * scale, height / 2, 2.5, 0, 2 * Math.PI);
+        ctx.arc(centerX + rootOne * scale, centerY, 2.5, 0, 2 * Math.PI);
         ctx.fill();
-        ctx.stroke();
-
+        
         ctx.beginPath();
-        ctx.arc(width / 2 + rootTwo * scale, height / 2, 2.5, 0, 2 * Math.PI);
+        ctx.arc(centerX + rootTwo * scale, centerY, 2.5, 0, 2 * Math.PI);
         ctx.fill();
-        ctx.stroke();
-
+        
         ctx.beginPath();
-        ctx.arc(width / 2 + rootThree * scale, height / 2, 2.5, 0, 2 * Math.PI);
+        ctx.arc(centerX + rootThree * scale, centerY, 2.5, 0, 2 * Math.PI);
         ctx.fill();
-        ctx.stroke();
     }
 
     drawGraph();
-
 })
