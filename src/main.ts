@@ -18,13 +18,13 @@ form?.addEventListener("submit", (event) => {
     let rootTwo: number;
     let rootThree: number;
 
-    /* Different variables used for each calculation */
-    const p = (3 * a * c - b * b) / (3 * a * a);
-    const q = (27 * a * a * d - 9 * a * b * c + 2 * b * b * b) / (27 * a * a * a);
-    const discriminant = Math.pow(q / 2, 2) + Math.pow(p / 3, 3);
-    const u = Math.cbrt(-q / 2 + Math.sqrt(discriminant));
-    const v = Math.cbrt(-q / 2 - Math.sqrt(discriminant));
-    const adjustment = b / (3 * a);
+    // Different variables used for each calculation 
+    const p: number = (3 * a * c - b * b) / (3 * a * a);
+    const q: number = (27 * a * a * d - 9 * a * b * c + 2 * b * b * b) / (27 * a * a * a);
+    const discriminant: number = (q / 2) * (q / 2) + (p / 3) * (p / 3) * (p / 3);
+    const u: number = Math.cbrt(-q / 2 + Math.sqrt(discriminant));
+    const v: number = Math.cbrt(-q / 2 - Math.sqrt(discriminant));
+    const adjustment: number = b / (3 * a);
 
     function cardano(u: number, v: number): number {
         return u + v - adjustment;
@@ -63,13 +63,13 @@ form?.addEventListener("submit", (event) => {
 
     function equation(): string {
         let equation: string = '';
-        
-        equation += a + 'x³';
-        equation += (b === 0 ? '' : (b > 0 ? ' + ' + b : ' - ' + Math.abs(b)) + 'x²');
-        equation += (c === 0 ? '' : (c > 0 ? ' + ' + c : ' - ' + Math.abs(c)) + 'x');
+
+        equation += (a > 0 ? (a === 1 ? '' : a) : (Math.abs(a) === 1 ? '-' : a)) + 'x³';
+        equation += (b === 0 ? '' : (b > 0 ? ' + ' + (b === 1 ? '' : b) : ' - ' + (Math.abs(b) === 1 ? '' : Math.abs(b))) + 'x²');
+        equation += (c === 0 ? '' : (c > 0 ? ' + ' + (c === 1 ? '' : c) : ' - ' + (Math.abs(c) === 1 ? '' : Math.abs(c))) + 'x');
         equation += (d === 0 ? '' : (d > 0 ? ' + ' + d : ' - ' + Math.abs(d))) + ' = 0';
 
-        return equation; 
+        return equation;
     }
 
     (document.getElementById("p-value") as HTMLInputElement).value = p.toFixed(3);
@@ -83,13 +83,13 @@ form?.addEventListener("submit", (event) => {
     const width = canvas.width;
     const height = canvas.height;
     const centerX = width / 2;
-    const centerY = height / 2
+    const centerY = height / 2;
     const scale = 25;
 
     function drawGraph() {
         if (!ctx) return;
 
-        ctx.clearRect(0, 0, width, height)
+        ctx.clearRect(0, 0, width, height);
 
         ctx.strokeStyle = "#e0e0e0";
 
@@ -98,52 +98,51 @@ form?.addEventListener("submit", (event) => {
             ctx.moveTo(x, 0);
             ctx.lineTo(x, height);
             ctx.stroke();
-        }
+        };
 
         for (let y = 0; y <= height; y += scale) {
             ctx.beginPath();
             ctx.moveTo(0, y);
             ctx.lineTo(width, y);
             ctx.stroke();
-        }
+        };
 
         ctx.strokeStyle = "#000000";
 
         ctx.beginPath();
-        ctx.moveTo(0, centerY)
-        ctx.lineTo(width, centerY)
+        ctx.moveTo(0, centerY);
+        ctx.lineTo(width, centerY);
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.moveTo(centerX, 0)
-        ctx.lineTo(centerX, height)
+        ctx.moveTo(centerX, 0);
+        ctx.lineTo(centerX, height);
         ctx.stroke();
 
-        ctx.strokeStyle = "#ff0000"
+        ctx.strokeStyle = "#ff0000";
 
         ctx.beginPath();
-        for (let x = -centerX / scale; x <= centerX / scale; x += 0.05) {
+        for (let x = -centerX / scale; x <= centerX / scale; x += 0.1) {
             const y = a * x * x * x + b * x * x + c * x + d;
             const canvasX = centerX + x * scale; // Translates graph coordinates into pixel
             const canvasY = centerY - y * scale; // coordinates
 
-            if (x === -width / (2 * scale)) ctx.moveTo(canvasX, canvasY) 
-                else ctx.lineTo(canvasX, canvasY);
-            
-            ctx.stroke();
+            if (x === -centerX / scale) ctx.moveTo(canvasX, canvasY)
+            else ctx.lineTo(canvasX, canvasY);
 
-        }
+            ctx.stroke();
+        };
 
         ctx.strokeStyle = "#002aff";
         ctx.fillStyle = "#002aff";
         ctx.beginPath();
         ctx.arc(centerX + rootOne * scale, centerY, 2.5, 0, 2 * Math.PI);
         ctx.fill();
-        
+
         ctx.beginPath();
         ctx.arc(centerX + rootTwo * scale, centerY, 2.5, 0, 2 * Math.PI);
         ctx.fill();
-        
+
         ctx.beginPath();
         ctx.arc(centerX + rootThree * scale, centerY, 2.5, 0, 2 * Math.PI);
         ctx.fill();
