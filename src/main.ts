@@ -56,7 +56,7 @@ form?.addEventListener("submit", (event) => {
         } else { // One distinct root, one repeated root
             rootTwo = Math.cbrt(q / 2) - adjustment;
             root1.value = rootOne.toFixed(3);
-            root2.value = rootOne.toFixed(3);
+            root2.value = rootTwo.toFixed(3);
             root3.value = rootTwo.toFixed(3);
         }
     }
@@ -122,16 +122,16 @@ form?.addEventListener("submit", (event) => {
         ctx.strokeStyle = "#ff0000";
 
         ctx.beginPath();
-        for (let x = -centerX / scale; x <= centerX / scale; x += 0.1) {
+        for (let x = -centerX / scale; x <= centerX / scale; x += 0.05) {
             const y = a * x * x * x + b * x * x + c * x + d;
             const canvasX = centerX + x * scale; // Translates graph coordinates into pixel
             const canvasY = centerY - y * scale; // coordinates
 
             if (x === -centerX / scale) ctx.moveTo(canvasX, canvasY)
             else ctx.lineTo(canvasX, canvasY);
-
-            ctx.stroke();
         };
+        
+        ctx.stroke();
 
         ctx.strokeStyle = "#002aff";
         ctx.fillStyle = "#002aff";
