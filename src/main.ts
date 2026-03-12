@@ -31,7 +31,7 @@ form?.addEventListener("submit", (event) => {
     }
 
     function trignometric(k: number): number {
-        const theta = (1 / 3) * Math.acos(-q / (2 * Math.sqrt(-Math.pow(p / 3, 3))));
+        const theta: number = (1 / 3) * Math.acos(-q / (2 * Math.sqrt(-Math.pow(p / 3, 3))));
         return 2 * Math.sqrt(-p / 3) * Math.cos(theta + 2 * k * Math.PI / 3) - adjustment
     }
 
@@ -80,11 +80,11 @@ form?.addEventListener("submit", (event) => {
     const canvas = document.getElementById("graph") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
 
-    const width = canvas.width;
-    const height = canvas.height;
-    const centerX = width / 2;
-    const centerY = height / 2;
-    const scale = 25;
+    const width: number = canvas.width;
+    const height: number = canvas.height;
+    const centerX: number = width / 2;
+    const centerY: number = height / 2;
+    const scale: number = 25;
 
     function drawGraph() {
         if (!ctx) return;
@@ -122,10 +122,10 @@ form?.addEventListener("submit", (event) => {
         ctx.strokeStyle = "#ff0000";
 
         ctx.beginPath();
-        for (let x = -centerX / scale; x <= centerX / scale; x += 0.05) {
-            const y = a * x * x * x + b * x * x + c * x + d;
-            const canvasX = centerX + x * scale; // Translates graph coordinates into pixel
-            const canvasY = centerY - y * scale; // coordinates
+        for (let x: number = -centerX / scale; x <= centerX / scale; x += 0.05) {
+            const y: number = a * x * x * x + b * x * x + c * x + d;
+            const canvasX: number = centerX + x * scale; // Translates graph coordinates into pixel
+            const canvasY: number = centerY - y * scale; // coordinates
 
             if (x === -centerX / scale) ctx.moveTo(canvasX, canvasY)
             else ctx.lineTo(canvasX, canvasY);
